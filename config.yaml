@@ -1,0 +1,39 @@
+baseURL: https://wpx.kainonly.com
+title: WEPLANX MANUAL
+defaultContentLanguage: zh
+theme: hugo-book
+disablePathToLower: true
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  tableOfContents:
+    startLevel: 1
+  highlight:
+    style: vs
+
+languages:
+  zh:
+    languageName: Chinese
+    contentDir: content
+    weight: 1
+  en:
+    languageName: English
+    contentDir: content.en
+    weight: 2
+
+
+menu:
+  after:
+    - name: Github
+      url: https://github.com/weplanx
+      weight: 9
+
+#googleAnalytics: "G-J0NVPEBDTM"
+
+#disqusShortname: "web-ying-yong-ji-zhu-fen-xiang"
+
+params:
+  BookTheme: light
+  BookSearch: true
