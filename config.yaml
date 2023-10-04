@@ -1,8 +1,10 @@
 baseURL: https://wpx.kainonly.com
-title: WEPLANX MANUAL
+title: WEPLANX 手册
 defaultContentLanguage: zh
 theme: hugo-book
+
 disablePathToLower: true
+enableGitInfo: true
 
 markup:
   goldmark:
@@ -16,7 +18,7 @@ markup:
 languages:
   zh:
     languageName: Chinese
-    contentDir: content
+    contentDir: content.zh
     weight: 1
   en:
     languageName: English
@@ -28,7 +30,7 @@ menu:
   after:
     - name: Github
       url: https://github.com/weplanx
-      weight: 9
+      weight: 99
 
 googleAnalytics: "G-HRP1GV8G14"
 

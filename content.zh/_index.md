@@ -1,7 +1,7 @@
 ---
 bookToC: false
-title: Home
+title: 简介
 type: docs
 ---
 
-## 👋 欢迎访问
+# 👋 欢迎访问
