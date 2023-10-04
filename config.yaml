@@ -22,6 +22,7 @@ languages:
     weight: 1
   en:
     languageName: English
+    title: WEPLANX MANUAL
     contentDir: content.en
     weight: 2
 
