@@ -30,9 +30,9 @@ menu:
       url: https://github.com/weplanx
       weight: 9
 
-#googleAnalytics: "G-J0NVPEBDTM"
+googleAnalytics: "G-HRP1GV8G14"
 
-#disqusShortname: "web-ying-yong-ji-zhu-fen-xiang"
+disqusShortname: "weplanx-shou-ce"
 
 params:
   BookTheme: light
