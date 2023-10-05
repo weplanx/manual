@@ -8,6 +8,8 @@ title: 配置项
 应用服务的配置项由环境变量和分布动态配置组成，每个配置项都会赋值到后端服务的变量 Values
 中，另外当动态配置发布时每个同域节点（即同命名空间）也将自动同步变量 Values 使其动态化
 
+![](/images/configurations/init.png)
+
 ## 环境变量
 
 ### MODE
@@ -91,7 +93,7 @@ title: 配置项
 动态配置基于 Nats KeyValue 实现，是支持分布式应用配置同步与分发的核心。
 数据存储均是加密的，但在鉴权后允许解密返回，<font color="red">*脱敏</font>代表该部分字段不会完整返回，当返回`*`时说明存在值。
 
-![configurations-sync.png](/images/configurations-sync.png)
+![](/images/configurations/sync.png)
 
 {{< hint info >}}
 
