@@ -8,6 +8,8 @@ type: docs
 
 Weplanx 是一个探索 DevOps 与 LowCode 结合的开源项目，你可以通过他轻松管理资源、工作流、队列和即时通讯等等，同样也可以作为任意分布式系统的基础服务进行定制。
 
+技术栈采用 Golang、TypeScript、MongoDB、Redis 和 Nats 等，基于 [Hertz](https://github.com/cloudwego/hertz) 和 [Ng-Zorro-Ant](https://github.com/NG-ZORRO/ng-zorro-antd) 开发。
+
 作为基础服务，Weplanx 可以提供：
 
 - 常规系统包括的基础功能
@@ -18,7 +20,7 @@ Weplanx 是一个探索 DevOps 与 LowCode 结合的开源项目，你可以通�
 Weplanx 架构定位在中轻量级应用，但需要运行在 Kubernetes 上，考虑轻量可以选择 [Rancher K3s 方案](https://www.rancher.com/products/k3s) 进行部署，此外需要准备：
 
 - 计算节点
-  - 至少 3 个 2C4G 节点组成 K3s 集群，全自建需 7 个节点
+  - 至少3个 2C4G 节点组成 K3s 集群，全自建需7个节点
 - MongoDB
   - 推荐版本 >= 5.0（支持时序集合）
   - 生产环境至少 2C4G 副本集群，优先 Atlas 或公有云，自建推荐 [Percona Distribution for MongoDB](https://docs.percona.com/percona-distribution-for-mongodb/6.0/?_gl=1*1xck7lp*_gcl_au*NzQ1MjkwMTI4LjE2OTU4NjE5MDM.*_ga*OTA4OTcwMDcyLjE2OTU4NjE5MDU.*_ga_DXWV0B7PSN*MTY5NjQyOTY1Ni42LjEuMTY5NjQyOTY4NC4zMi4wLjA.)

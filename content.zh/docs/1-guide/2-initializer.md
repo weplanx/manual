@@ -1,5 +1,5 @@
 ---
-weight: 3
+weight: 2
 title: 初始化
 ---
 
