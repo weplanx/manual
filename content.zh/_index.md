@@ -8,7 +8,7 @@ type: docs
 
 Weplanx 是一个探索 DevOps 与 LowCode 结合的开源项目，你可以通过他轻松管理资源、工作流、队列和即时通讯等等，同样也可以作为任意分布式系统的基础服务进行定制。
 
-技术栈采用 Golang、TypeScript、MongoDB、Redis 和 Nats 等，基于 [Hertz](https://github.com/cloudwego/hertz) 和 [Ng-Zorro-Ant](https://github.com/NG-ZORRO/ng-zorro-antd) 开发。
+技术栈采用 Golang、TypeScript、MongoDB、Redis 和 Nats 等，基于 [Hertz](https://github.com/cloudwego/hertz) 和 [Ng-Zorro-Antd](https://github.com/NG-ZORRO/ng-zorro-antd) 开发。
 
 作为基础服务，Weplanx 可以提供：
 
