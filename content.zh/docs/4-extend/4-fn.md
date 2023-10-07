@@ -44,7 +44,7 @@ title: 云函数
 
 以腾讯云，云函数为例：
 
-- 选择使用容器镜像，<font color="red">*工作流方式必须为函数服务需要在 COS 命名空间创建</font>
+- 选择使用容器镜像，<font color="red">*工作流方式函数服务需要在 COS 命名空间创建</font>
 - 函数类型：事件函数
 - 函数名称：自定
 - 镜像：ccr.ccs.tencentyun.com/weplanx/fn:[version]
