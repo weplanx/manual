@@ -101,7 +101,7 @@ spec:
 
 # 客户端
 
-用于管理收集器配置、数据传输和调度分发的客户端，在应用程序中安装：
+用于管理收集服务配置、数据传输和调度分发的客户端，在应用程序中安装：
 
 ```shell
 go get github.com/weplanx/collector
@@ -117,8 +117,8 @@ if js, err = nc.JetStream(nats.PublishAsyncMaxPending(256)); err != nil {
 
 // Create the transfer client
 if x, err = client.New(
-    transfer.SetNamespace("beta"),
-    transfer.SetJetStream(js),
+    client.SetNamespace("example"),
+    client.SetJetStream(js),
 ); err != nil {
     panic(err)
 }
@@ -127,24 +127,30 @@ if x, err = client.New(
 ## 设置日志流
 
 ```golang
-// Set logger
 err := x.Set(context.TODO(), client.StreamOption{
     Key:         "system",
-    Description: "system beta",
+    Description: "system example",
+})
+```
+
+## 更新日志流
+
+```golang
+err := x.Update(context.TODO(), client.StreamOption{
+    Key:         "system",
+    Description: "system example 123",
 })
 ```
 
 ## 获取日志流详情
 
 ```golang
-// Get logger
 result, err := client.Get("system")
 ```
 
 ## 发布日志
 
 ```golang
-// Publish log data
 err := x.Publish(context.TODO(), "system", client.Payload{
     Timestamp: time.Now(),
     Data: map[string]interface{}{
@@ -166,10 +172,9 @@ err := x.Publish(context.TODO(), "system", client.Payload{
 ## 移除日志流
 
 ```golang
-// Remove logger
 err := x.Remove("system")
 ```
 
-## License
+# License
 
 [BSD-3-Clause License](https://github.com/weplanx/collector/blob/main/LICENSE)
