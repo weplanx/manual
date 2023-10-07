@@ -44,7 +44,7 @@ title: 云函数
 
 以腾讯云，云函数为例：
 
-- 选择使用容器镜像，<font color="red">*函数服务需要在 COS 命名空间创建</font>
+- 选择使用容器镜像，<font color="red">*工作流方式必须为函数服务需要在 COS 命名空间创建</font>
 - 函数类型：事件函数
 - 函数名称：自定
 - 镜像：ccr.ccs.tencentyun.com/weplanx/fn:[version]
@@ -53,11 +53,24 @@ title: 云函数
 - 环境变量：
   - `PROCESS=tencent-cos-excel`
   - 配置私有的 `COS_URL` `COS_SECRETID` `COS_SECRETKEY`
-- 执行配置：<font color="red">*启用异步执行、状态追踪</font>
+- 执行配置：<font color="red">*工作流方式必须启用异步执行、状态追踪</font> 
 
 ![](/images/extend/fn.png)
 
-部署完成后，到对应的 COS 存储桶中，先确认【数据处理】->【媒体处理】是否开启（需要开启）
+### 方式一：COS 触发
+
+部署完成后，至该函数的【触发管理】
+
+- 触发方式：COS 触发
+- COS Bucket：选择对应 Bucket
+- 事件类型：全部创建
+- 后缀过滤：`.excel`
+
+![](/images/extend/fn-trigger.png)
+
+### 方式二：工作流
+
+适合多重处理需自定回调的复杂场景，到对应的 COS 存储桶中，先确认【数据处理】->【媒体处理】是否开启（需要开启）
 
 ![](/images/extend/fn-cos-ci.png)
 
@@ -67,7 +80,7 @@ title: 云函数
 - 匹配规则：自定义规则
   - 自定义后缀：excel
 - 增加一个自定义函数输入，选择刚才建立的云函数，如图
-- 回调方式：不需要回调（如果需要文件转换完成后的状态，可以启用并自行扩展）
+- 回调方式：启用并自定义处理事件
 
 ![](/images/extend/workflow.png)
 
