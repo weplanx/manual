@@ -12,14 +12,13 @@ title: 中间件
 ```golang {hl_lines=[2,5]}
 func (x *API) Routes(h *server.Hertz) (err error) {
 	csrfToken := x.Csrf.VerifyToken(!x.V.IsRelease())
-	
+
 	...
 	h.GET("", x.Index.Ping)
 	_login := h.Group("login", csrfToken)
 	{
 	    ...
 	}
-	
 	...
 }
 ```

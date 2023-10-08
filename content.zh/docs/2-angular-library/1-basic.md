@@ -15,14 +15,14 @@ npm install @weplanx/ng
 
 - Weplanx 辅助管理服务
 - 公有属性：
-    - assets `string` 资源加载地址，默认 `/assets`
-    - upload `AsyncSubject<UploadOption>` 上传配置状态
-    - scripts `Map<string, AsyncSubject<void>>` 脚本加载状态
+  - assets `string` 资源加载地址，默认 `/assets`
+  - upload `AsyncSubject<UploadOption>` 上传配置状态
+  - scripts `Map<string, AsyncSubject<void>>` 脚本加载状态
 
 ### 设置资源路径
 
 - setAssets(v: string): void
-    - v `string` 本地或远程路径
+  - v `string` 本地或远程路径
 
 例如：资源路径是 CDN 分发的地址 https://cdn.xxx.com，在 `app.component.ts` 中加入
 
@@ -36,8 +36,7 @@ export class AppComponent implements OnInit {
     private app: AppService,
     private wpx: WpxService,
     private icon: NzIconService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.app.ping().subscribe(() => {
@@ -52,11 +51,11 @@ export class AppComponent implements OnInit {
 ### 设置上传配置
 
 - setUpload(v: UploadOption): void
-    - v `UploadOption` 上传配置
-        - UploadOption
-            - type `string` 平台
-            - url `string` 地址
-            - limit `number` 上传大小
+  - v `UploadOption` 上传配置
+    - UploadOption
+      - type `string` 平台
+      - url `string` 地址
+      - limit `number` 上传大小
 
 只需要从后端获取并设置即可
 
@@ -70,8 +69,7 @@ export class AppComponent implements OnInit {
     private app: AppService,
     private wpx: WpxService,
     private icon: NzIconService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.app.getUploadOption().subscribe(v => {
@@ -84,8 +82,8 @@ export class AppComponent implements OnInit {
 ### 创建 Model
 
 - setModel\<T>(key: string, api: WpxApi\<T>): WpxModel\<T>
-    - key `string` 索引，会自动关联本地存储
-    - api ` WpxApi<T>` 通用接口
+  - key `string` 索引，会自动关联本地存储
+  - api ` WpxApi<T>` 通用接口
 
 初始化一个 WpxModel
 
@@ -100,8 +98,7 @@ export class UsersComponent implements OnInit {
   constructor(
     private wpx: WpxService,
     public users: UsersService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.model = this.wpx.setModel<User>('users', this.users);
@@ -147,8 +144,7 @@ export class AppComponent implements OnInit {
     private app: AppService,
     private wpx: WpxService,
     private icon: NzIconService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.wpx.loadScript('cropperjs', 'https://cdn.jsdelivr.net/npm/cropperjs@1.6.0/dist/cropper.min.js', []);
@@ -209,18 +205,18 @@ export class AppComponent implements OnInit {
 ### 设置
 
 - set\<T>(key: string, value: T): Observable<void>
-    - key `string` 键名
-    - value `T` 数值
+  - key `string` 键名
+  - value `T` 数值
 
 ### 获取
 
 - get\<T>(key: string): Observable<T | undefined>
-    - key `string` 键名
+  - key `string` 键名
 
 ### 移除
 
 - remove(key: string): Observable<void>
-    - key `string` 键名
+  - key `string` 键名
 
 ### 清空
 
@@ -244,7 +240,7 @@ export class AppComponent implements OnInit {
   - docs `T[]` 资源数组数据
   - options `CreateOption<T>` 配置
     - xdata `XData` docs.$ 格式转换
-    - txn `string` 事务 ID 
+    - txn `string` 事务 ID
 
 ### 获取资源大小
 
@@ -303,7 +299,7 @@ export class AppComponent implements OnInit {
   - update `Update<T>` 更新资源
   - options `UpdateOneByIdOption<T>`
     - xdata `XData` update 格式转换
-    - txn `string` 事务 ID 
+    - txn `string` 事务 ID
 
 ### 替换指定 ID 的资源
 
@@ -321,7 +317,7 @@ export class AppComponent implements OnInit {
   - options `DeleteOption<T>`
     - txn `string` 事务 ID
 
-### 批量删除匹配资源 
+### 批量删除匹配资源
 
 - bulkDelete(filter: Filter\<T>, options?: BulkDeleteOption\<T>): Observable\<R>
   - filter `Filter<T>` 筛选条件
