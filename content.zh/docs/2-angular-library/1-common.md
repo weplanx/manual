@@ -1,9 +1,9 @@
 ---
 weight: 1
-title: 基本功能
+title: 核心功能
 ---
 
-# 基本功能
+# 核心功能
 
 安装 Angular 辅助库
 
