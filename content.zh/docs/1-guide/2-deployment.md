@@ -500,3 +500,20 @@ spec:
                 port:
                   number: 3000
 ```
+
+## 部署前端静态页
+
+因中后台没有 SEO 需要，已不考虑采用 SSR 方式，前端将使用完全静态的 PWA 方式，所以需克隆 `console` 项目，安装依赖
+
+```shell
+git clone git@github.com:weplanx/console.git
+cd console && npm install
+```
+
+项目 `environments/environment.ts` 中修改需要部署的配置，执行构建
+
+```shell
+npm run build
+```
+
+之后，可以使用任何静态部署方式[查看](https://angular.io/guide/deployment)，也可以使用公有云的对象存储-静态站点，再通过 CDN 回源对象存储实现加速。
