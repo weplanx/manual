@@ -383,7 +383,7 @@ export class AppComponent implements OnInit {
 
 ### 获取数据
 
-- fetch(search?: Filter<T>, sort?: Sort<T>): Observable<FindResult<T>>
+- fetch(search?: Filter\<T>, sort?: Sort\<T>): Observable<FindResult\<T>\>
   - search `Filter<T>` 自定筛选条件
   - sort `Sort<T>` 自定排序
 

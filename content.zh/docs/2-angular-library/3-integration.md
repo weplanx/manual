@@ -7,11 +7,162 @@ title: 集成组件
 
 ## 模型关键词
 
+```html
+<wpx-keyword></wpx-keyword>
+```
+
+- @Input({ required: true }) wpxModel!: WpxModel\<T> 通用模型
+- @Input({ required: true }) wpxKeys!: string[] 关键词字段
+- @Input() wpxWidth: number 宽度，默认 `220` px
+- @Input() wpxPlaceholder: string 提示填充，默认 `关键词搜索`
+- @Output() wpxSubmit: EventEmitter\<void> 提交事件
+
+例如：项目 experiment/table ，在动态列表或动态表格中使用
+
+```html
+<wpx-keyword
+  [wpxModel]="model"
+  [wpxKeys]="['no', 'name', 'account']"
+  (wpxSubmit)="getData()"
+  wpxPlaceholder="订单号、姓名、账户"
+></wpx-keyword>
+```
+
 ## 表格配件
+
+```html
+<wpx-toolbox></wpx-toolbox>
+```
+
+- @Input({ required: true }) wpxModel!: WpxModel\<T> 通用模型
+- @Input() wpxSearchHeight: number 高度，默认：`340` px
+- @Input() wpxSearchForm?: FormGroup 自定搜索 FormGroup
+- @Input() wpxSearchTitle?: TemplateRef\<Any> 自定搜索面板的标题，默认 `高级检索`
+- @Output() wpxClear: EventEmitter\<void> 清空条件事件
+- @Output() wpxRefresh: EventEmitter\<void> 数据刷新事件
+
+例如：项目 experiment/table ，在动态列表或动态表格中使用
+
+{{<tabs "toolbox">}}
+{{<tab "table.component.html">}}
+
+```html
+<wpx-toolbox [wpxModel]="model" [wpxSearchForm]="form" (wpxClear)="clear()" (wpxRefresh)="getData()">
+  <form *ngIf="form" nz-form id="search" [formGroup]="form" (wpxSubmit)="search($event)">
+    <nz-row [nzGutter]="[16, 16]">
+      <nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label>订单号</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="no" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label>姓名</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="name" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label>账户</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="account" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+  </form>
+</wpx-toolbox>
+```
+
+{{</tab>}}
+{{<tab "table.component.ts">}}
+
+```typescript
+@Component({
+  selector: 'x-table',
+  templateUrl: './table.component.html'
+})
+export class TableComponent implements OnInit {
+  model!: WpxModel<Order>;
+  form!: FormGroup;
+  filter: Filter<Order> = {};
+
+  constructor(
+    private wpx: WpxService,
+    private fb: FormBuilder,
+    private modal: NzModalService,
+    private message: NzMessageService,
+    public orders: OrdersService
+  ) {}
+
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      no: [],
+      name: [],
+      account: []
+    });
+    this.model = this.wpx.setModel<Order>('exp', this.orders);
+    this.model.ready().subscribe(() => {
+      this.getData();
+    });
+  }
+
+  getData(refresh = false): void {
+    if (refresh) {
+      this.model.page = 1;
+    }
+    this.model.fetch(this.filter).subscribe(() => {
+      console.debug('fetch:ok');
+    });
+  }
+
+  clear(): void {
+    this.form.reset();
+    this.filter = {};
+    this.getData();
+  }
+
+  search(data: Any): void {
+    for (const [k, v] of Object.entries(data)) {
+      if (v) {
+        this.filter[k] = { $regex: `${v}` };
+      }
+    }
+    this.getData();
+  }
+}
+```
+
+{{</tab>}}
+{{</tabs>}}
+
+效果如图：
+
+![](/images/angular/toolbox.gif)
 
 ## 动态表格
 
-## 动态列表
+```html
+<wpx-table></wpx-table>
+```
+
+- @Input({ required: true }) wpxModel!: WpxModel\<T> 通用模型
+- @Input({ required: true }) wpxColumns!: WpxColumn\<T>[] 表格列定义
+- @Input({ required: true }) wpxAction!: TemplateRef<{ $implicit: AnyDto<T> }> 操作自定模板
+- @Input() wpxTitle?: TemplateRef\<void> 标题自定模板
+- @Input() wpxExtra?: TemplateRef\<void> 附加自定模板
+- @Input() wpxX?: string 固定列宽
+- @Input() wpxBodyStyle: NgStyleInterface | null 自定卡片样式，默认 `{ height: 'calc(100% - 64px)' }`
+- @Output() wpxChange: EventEmitter\<void> 更新事件
+
+例如：项目 experiment/table 有完整的演示，效果如图：
+
+![](/images/angular/table.gif)
 
 ## 头像上传
 
@@ -217,12 +368,12 @@ export class RichtextComponent implements ControlValueAccessor {
 <wpx-filebrowser></wpx-filebrowser>
 ```
 
-- @Input({ required: true }) wpxApi!: WpxApi<T> 通用接口
+- @Input({ required: true }) wpxApi!: WpxApi\<T> 通用接口
 - @Input({ required: true }) wpxType!: WpxFileType 类型，目前可以是 `picture` 或 `video`
 - @Input({ required: true }) wpxFallback!: string 加载图片
-- @Input() wpxForm?: (doc: AnyDto<T>) => void 表单
-- @Input() wpxTitle?: TemplateRef<void> 标题
-- @Input() wpxExtra?: TemplateRef<void> 附加
+- @Input() wpxForm?: (doc: AnyDto\<T>) => void 表单
+- @Input() wpxTitle?: TemplateRef\<void> 标题
+- @Input() wpxExtra?: TemplateRef\<void> 附加
 
 因为每个项目情况可能不同，为灵活组件只预设了主要功能，所以在实际使用中必须进行包裹组装自定，具体可查看 console 项目中的 app/filebrowser/\*。
 
@@ -233,7 +384,7 @@ export class RichtextComponent implements ControlValueAccessor {
 ```
 
 - @Input({ required: true }) wpxValue!: string[] 路径值
-- @Input({ required: true }) wpxApi!: WpxApi<T> 接口
+- @Input({ required: true }) wpxApi!: WpxApi\<T> 接口
 - @Input({ required: true }) wpxType!: WpxFileType 类型
 - @Input({ required: true }) wpxFallback!: string 加载中图片
 - @Input() wpxHeight: number 高度

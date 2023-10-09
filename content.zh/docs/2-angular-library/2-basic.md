@@ -22,7 +22,7 @@ img[wpxRetry]
 form[wpxSubmit]
 ```
 
-- @Output() readonly wpxSubmit: EventEmitter<any> 提交事件
+- @Output() readonly wpxSubmit: EventEmitter\<any> 提交事件
 
 ## 统一上传
 
