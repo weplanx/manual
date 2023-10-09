@@ -96,7 +96,7 @@ nz-upload[wpxUpload]
 ## 生成资源路径
 
 ```
-{{ value_expression | wpxBlank: query : css }}
+{{ value_expression | wpxAssets: query : css }}
 ```
 
 - value `string[]` URL 片段
