@@ -1,15 +1,19 @@
 ---
 weight: 3
-title: 启用 EMQX
+title: Enable EMQX
 ---
 
-# 启用 EMQX
+# Enable EMQX
 
-Weplanx 采用 [EMQX](https://www.emqx.io/)（大规模分布式 MQTT 消息服务器） 进行集成实现对即时通信的授权管理。项目中使用 EMQX Broker 开源版，当然企业级更推荐稳定强大的 EMQX Enterprise 。
+Weplanx adopts [EMQX](https://www.emqx.io/) for integration to realize authorization management for real-time messaging.
 
-## 部署
+The open source version of EMQX Broker is used in the project.
 
-安装 EMQX Operator 完毕后部署 Broker 即可，[参考文档](https://docs.emqx.com/zh/emqx-operator/latest/getting-started/getting-started.html)
+Of course, the stable and powerful EMQX Enterprise is recommended for enterprise level.
+
+## Deploy
+
+After installing EMQX Operator, deploy Broker, refer to the [documentation](https://docs.emqx.com/en/emqx-operator/latest/getting-started/getting-started.html)
 
 ```yaml
 apiVersion: apps.emqx.io/v2beta1
@@ -37,9 +41,9 @@ spec:
           - ReadWriteOnce
 ```
 
-## 创建 XAPI
+## Create XAPI
 
-在应用上线完毕后，创建 XAPI 服务用于内部系统，对应端口推荐 `:6000`
+After the application is launched, create an XAPI for use in the internal, port recommendation `:6000`
 
 ```yaml
 apiVersion: apps/v1
@@ -110,7 +114,7 @@ spec:
             name: server
 ```
 
-## 创建内部服务
+## Apply Service
 
 ```yaml
 apiVersion: v1
@@ -125,17 +129,17 @@ spec:
     app: xapi
 ```
 
-## 设置 HTTP 认证与授权
+## Set HTTP Authentication and Authorization
 
-XAPI 集成 EMQX 接口可[查看](/docs/6-xapi/1-emqx/)，接下来需要访问 EMQX Dashboard
+The XAPI integrated EMQX API has [these](/en/docs/6-xapi/1-emqx/), next you need to access the EMQX Dashboard
 
-### 客户端认证
+### Authentication
 
-- 认证方式：Password-Based
-- 数据源：HTTP 服务
-- 请求方式：POST
+- Mechanism: Password-Based
+- Backend: HTTP Server
+- Method: POST
 - URL：http://xapi.emqx.svc.cluster.local:6000/emqx/auth
-- 请求体：
+- Body:
 
 ```json
 {
@@ -144,12 +148,12 @@ XAPI 集成 EMQX 接口可[查看](/docs/6-xapi/1-emqx/)，接下来需要访问
 }
 ```
 
-### 客户端授权
+### Authorization
 
-- 数据源：HTTP 服务
-- 请求方式：POST
+- Backend: HTTP Server
+- Method: POST
 - URL：http://xapi.emqx.svc.cluster.local:6000/emqx/acl
-- 请求体：
+- Body:
 
 ```json
 {
@@ -158,12 +162,14 @@ XAPI 集成 EMQX 接口可[查看](/docs/6-xapi/1-emqx/)，接下来需要访问
 }
 ```
 
-## 设置数据桥接
+## Data Bridges
 
-XAPI 的数据桥接是针对开源版 Broker 消息发送做日志收集，如果是企业版自身是支持更多功能的，无需采用该方式。
+The data bridge of XAPI is to collect logs for the open source version of Broker message sending. 
 
-- 数据桥接类型：HTTP 服务
-- 请求体：
+If the enterprise version itself supports more functions, there is no need to use this method.
+
+- Type of Data Bridge: HTTP Server
+- Body:
 
 ```json
 {
