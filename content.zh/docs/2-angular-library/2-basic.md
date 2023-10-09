@@ -7,9 +7,32 @@ title: 基础能力
 
 ## 自动重试
 
+```
+img[wpxRetry]
+```
+
+- @Input() wpxRetryCount: number 重试次数，默认 `5` 次 
+- @Input() wpxDelay: number 重试间隔，默认 `5000` ms
+
 ## 表单提交
 
+判断验证状态并更新表单所有 controls （包含树型结构）的状态
+
+```
+form[wpxSubmit]
+```
+
+- @Output() readonly wpxSubmit: EventEmitter<any> 提交事件
+
 ## 统一上传
+
+载入远程异步获取的上传配置
+
+```
+nz-upload[wpxUpload]
+```
+
+- @Input() wpxExt?: string 扩展名
 
 # 预定义管道
 
