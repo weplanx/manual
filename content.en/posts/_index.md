@@ -3,5 +3,5 @@ menu:
   after:
     name: note
     weight: 98
-title: 归档记录
+title: Archive
 ---
