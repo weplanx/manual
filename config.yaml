@@ -1,6 +1,6 @@
 baseURL: https://wpx.kainonly.com
 title: WEPLANX 手册
-defaultContentLanguage: zh
+defaultContentLanguage: en
 theme: hugo-book
 
 disablePathToLower: true

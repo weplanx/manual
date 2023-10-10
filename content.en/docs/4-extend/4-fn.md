@@ -23,7 +23,7 @@ Data workflow serverless function for object storage processing, the main contai
 
 - Listening address, default `:9000`
 
-### PROCESS <font color="red">*必须</font>
+### PROCESS <font color="red">*required</font>
 
 - process
   - **tencent-cos-excel** Tencent Cloud COS Excel Processing
