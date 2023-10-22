@@ -6,7 +6,7 @@ title: 配置项
 # 配置项
 
 应用服务的配置项由环境变量和分布动态配置组成，每个配置项都会赋值到后端服务的变量 Values
-中，另外当动态配置发布时每个同域节点（即同命名空间）也将自动同步变量 Values 使其动态化
+中，另外当动态配置发布时每个同域节点（即同租户下）也将自动同步变量 Values 使其动态化
 
 ![](/images/configurations/init.png)
 
@@ -23,7 +23,7 @@ title: 配置项
 ### ADDRESS
 
 - 监听地址，默认 `:3000`
-- XAPI 建议设置 `:6000`，OpenAPI 建议设置 `:9000`
+- XAPI 默认 `:6000`，OpenAPI 默认 `:9000`
 
 ### CONSOLE <font color="red">*必须</font>
 
@@ -42,7 +42,7 @@ title: 配置项
 
 ### NAMESPACE <font color="red">*必须</font>
 
-- 应用命名空间，在同个 Nats 集群中命名必须唯一
+- 应用命名空间，在同个 Nats 租户中是唯一的，DevOps 默认是 weplanx 租户
 
 ### KEY <font color="red">*必须</font>
 
@@ -68,25 +68,29 @@ title: 配置项
 
 - Nats 的 NKEY 鉴权密钥
 
-### INFLUX_URL <font color="grey">*弃用</font>
+### INFLUX_URL <font color="red">*必须</font>
 
 - InfluxDB 的连接地址
 
-### INFLUX_ORG <font color="grey">*弃用</font>
+### INFLUX_ORG <font color="red">*必须</font>
 
 - InfluxDB 的组织命名
 
-### INFLUX_TOKEN <font color="grey">*弃用</font>
+### INFLUX_TOKEN <font color="red">*必须</font>
 
 - InfluxDB 的授权 Token
 
-### INFLUX_BUCKET <font color="grey">*弃用</font>
+### INFLUX_BUCKET <font color="red">*必须</font>
 
 - InfluxDB 存储桶
 
-### OTLP_ENDPOINT
+### OTLP_ENDPOINT <font color="red">*必须</font>
 
-- OpenTelemetry 的连接 ENDPOINT
+- OpenTelemetry 的 ENDPOINT
+
+### OTLP_TOKEN <font color="red">*必须</font>
+
+- OpenTelemetry 的 TOKEN
 
 ## 分布动态配置
 
@@ -277,6 +281,10 @@ weplanx/server 还扩展了其他配置，如果是定制其他应用是不需�
 
 - `string` 腾讯云短信的 Secret
 
+### SmsSign
+
+- `string` 腾讯云短信签名
+
 ### SmsAppId
 
 - `string` 腾讯云短信应用 ID
@@ -284,6 +292,14 @@ weplanx/server 还扩展了其他配置，如果是定制其他应用是不需�
 ### SmsRegion
 
 - `string` 腾讯云短信地域
+
+### SmsPhoneBind
+
+- `string` 腾讯云短信手机绑定模板 ID
+
+### SmsLoginVerify
+
+- `string` 腾讯云短信登录模版 ID
 
 ### EmqxHost
 
@@ -297,5 +313,11 @@ weplanx/server 还扩展了其他配置，如果是定制其他应用是不需�
 
 - `string` EMQX API 的 Secret Key
 
+### AccelerateAddress
 
+- `string` 腾讯云资源加速云函数回调地址
+
+### CamUin
+
+- `string` 腾讯云主账号 ID
 

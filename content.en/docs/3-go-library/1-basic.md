@@ -85,10 +85,7 @@ decryptedText, err := x1.Decode(encryptedText)
 
 ```golang
 // Create captcha
-x = captcha.New(
-    captcha.SetNamespace(namespace),
-    captcha.SetRedis(redis.NewClient(opts)),
-)
+x = captcha.New(redis.NewClient(opts))
 
 // Create code
 ctx := context.TODO()
@@ -108,10 +105,7 @@ result := x.Delete(context.TODO(), "dev1")
 
 ```golang
 // Create locker
-x = locker.New(
-    locker.SetNamespace(namespace),
-    locker.SetRedis(redis.NewClient(opts)),
-)
+x = locker.New(redis.NewClient(opts))
 
 // Update
 ctx := context.TODO()

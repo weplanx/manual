@@ -16,7 +16,7 @@ Schedule message event publishing node
 ## Pre-requisite
 
 - Nats cluster needs to enable JetStream
-- Services and applications should work together the same namespace
+- Services and applications should work together the same nats tenant
 - Each node defines a NODE name that is unique, through which Schedule will be assigned to the node
 
 ## Deploy
@@ -56,8 +56,6 @@ spec:
               value: release
             - name: NODE
               value: "0"
-            - name: NAMESPACE
-              value: <*** your namespace ***>
             - name: NATS_HOSTS
               value: <*** your nats hosts ***>
             - name: NATS_NKEY
@@ -72,11 +70,7 @@ spec:
 
 ### NODE <font color="red">*required</font>
 
-- 节点命名
-
-### NAMESPACE <font color="red">*required</font>
-
-- namespace, the name must be unique within the same Nats cluster
+- Node name
 
 ### NATS_HOSTS <font color="red">*required</font>
 
@@ -97,19 +91,9 @@ go get github.com/weplanx/schedule
 ## Initialize
 
 ```golang
-// Create the nats client and then create the jetstream context
-if js, err = nc.JetStream(nats.PublishAsyncMaxPending(256)); err != nil {
-    panic(err)
-}
-
 // Create the schedule client
-if x, err = client.New(
-    client.SetNamespace("example"),
-    client.SetNats(nc),
-    client.SetJetStream(js),
-    client.SetNode("1"),
-); err != nil {
-    panic(err)
+if x, err = client.New(node, nc); err != nil {
+		panic(err)
 }
 ```
 
@@ -123,7 +107,8 @@ err := x.Set("api", common.ScheduleOption{
             Mode: "HTTP",
             Spec: "*/5 * * * * *",
             Option: common.HttpOption{
-                Url: "https://api.example.com",
+                Method: "GET",
+                Url: "https://dog.ceo/api/breeds/image/random",
             },
         },
     },

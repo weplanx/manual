@@ -16,7 +16,7 @@ title: 定时调度
 ## 先决条件
 
 - Nats 集群需启用 JetStream
-- 服务与应用要在同个命名空间下一起工作
+- 服务与应用要在同个 NATS 租户下一起工作
 - 每个节点定义 NODE 命名是唯一的，调度将通过它分配给对应节点
 
 ## 部署
@@ -55,8 +55,6 @@ spec:
               value: release
             - name: NODE
               value: "0"
-            - name: NAMESPACE
-              value: <*** your namespace ***>
             - name: NATS_HOSTS
               value: <*** your nats hosts ***>
             - name: NATS_NKEY
@@ -72,10 +70,6 @@ spec:
 ### NODE <font color="red">*必须</font>
 
 - 节点命名
-
-### NAMESPACE <font color="red">*必须</font>
-
-- 应用命名空间，在同个 Nats 集群中命名必须唯一
 
 ### NATS_HOSTS <font color="red">*必须</font>
 
@@ -96,19 +90,9 @@ go get github.com/weplanx/schedule
 ## 初始化
 
 ```golang
-// Create the nats client and then create the jetstream context
-if js, err = nc.JetStream(nats.PublishAsyncMaxPending(256)); err != nil {
-    panic(err)
-}
-
 // Create the schedule client
-if x, err = client.New(
-    client.SetNamespace("example"),
-    client.SetNats(nc),
-    client.SetJetStream(js),
-    client.SetNode("1"),
-); err != nil {
-    panic(err)
+if x, err = client.New(node, nc); err != nil {
+		panic(err)
 }
 ```
 
@@ -122,7 +106,8 @@ err := x.Set("api", common.ScheduleOption{
             Mode: "HTTP",
             Spec: "*/5 * * * * *",
             Option: common.HttpOption{
-                Url: "https://api.example.com",
+                Method: "GET",
+                Url: "https://dog.ceo/api/breeds/image/random",
             },
         },
     },

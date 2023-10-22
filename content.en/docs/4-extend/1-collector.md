@@ -13,25 +13,25 @@ title: Collector
 [![Go Report Card](https://goreportcard.com/badge/github.com/weplanx/collector?style=flat-square)](https://goreportcard.com/report/github.com/weplanx/collector)
 [![GitHub license](https://img.shields.io/github/license/weplanx/collector?style=flat-square)](https://raw.githubusercontent.com/weplanx/collector/main/LICENSE)
 
-Distribution lightly queue stream logset service
+Distribution lightly queue stream collect service
 
 ## Pre-requisite
 
 - Nats cluster needs to enable JetStream
 - MongoDB recommends version >= 5.0 so that time series collections can be used
-- Services and applications should work together the same namespace
+- Services and applications should work together the same nats tenant
 
 ## Deploy
 
-A collector service that subscribes to stream queues and then writes to logset.
+A collector service that subscribes to stream queues and then writes to data.
 
 ![](/images/extend/collector.png)
 
 {{<hint info>}}
 
-If you use the time series collection, you need to manually create a database and then add a log-stream. 
+If you use the time series collection, you need to manually create a database and then add a data stream. 
 Set the time series collection time field to `timestamp` and metadata field to `metaField`.
-Nats Stream naming `${namespace}:logs:${key}` is consistent with database name `${key}`.
+Nats Stream naming `COLLECT_${key}` is consistent with database name `${key}`.
 
 {{</hint>}}
 
@@ -63,8 +63,6 @@ spec:
           env:
             - name: MODE
               value: release
-            - name: NAMESPACE
-              value: <*** your namespace ***>
             - name: NATS_HOSTS
               value: <*** your nats hosts ***>
             - name: NATS_NKEY
@@ -80,10 +78,6 @@ spec:
 ### MODE
 
 - Working mode, default `debug`
-
-### NAMESPACE <font color="red">*required</font>
-
-- namespace, the name must be unique within the same Nats cluster
 
 ### NATS_HOSTS <font color="red">*required</font>
 
@@ -118,10 +112,7 @@ if js, err = nc.JetStream(nats.PublishAsyncMaxPending(256)); err != nil {
 }
 
 // Create the transfer client
-if x, err = client.New(
-    client.SetNamespace("example"),
-    client.SetJetStream(js),
-); err != nil {
+if x, err = client.New(js); err != nil {
     panic(err)
 }
 ```

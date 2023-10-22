@@ -13,23 +13,23 @@ title: 收集服务
 [![Go Report Card](https://goreportcard.com/badge/github.com/weplanx/collector?style=flat-square)](https://goreportcard.com/report/github.com/weplanx/collector)
 [![GitHub license](https://img.shields.io/github/license/weplanx/collector?style=flat-square)](https://raw.githubusercontent.com/weplanx/collector/main/LICENSE)
 
-分布式的轻量队列流日志收集服务
+分布式的轻量队列流收集服务
 
 ## 先决条件
 
 - Nats 集群需启用 JetStream 
 - MongoDB 建议版本 >= 5.0，以便可以使用时间序列集合
-- 服务与应用要在同个命名空间下一起工作
+- 服务与应用要在同个 NATS 租户下一起工作
 
 ## 部署
 
-用于订阅流队列然后写入日志集合的收集器服务。
+用于订阅流队列然后写入数据集合的收集服务。
 
 ![](/images/extend/collector.png)
 
 {{<hint info>}}
 
-若使用时序集合，需手动创建数据库再新增日志流，将时序集合时间字段设置为 `timestamp` 元数据字段设置为 `metaField`，Nats Stream 的命名 `${namespace}:logs:${key}` 对应数据库名 `${key}`。
+若使用时序集合，需手动创建数据库再新增数据流，将时序集合时间字段设置为 `timestamp` 元数据字段设置为 `metaField`，Nats Stream 的命名 `COLLECT_${key}` 对应数据库名 `${key}`。
 
 {{</hint>}}
 
@@ -61,8 +61,6 @@ spec:
           env:
             - name: MODE
               value: release
-            - name: NAMESPACE
-              value: <*** your namespace ***>
             - name: NATS_HOSTS
               value: <*** your nats hosts ***>
             - name: NATS_NKEY
@@ -78,10 +76,6 @@ spec:
 ### MODE
 
 - 工作模式，默认 `debug`
-
-### NAMESPACE <font color="red">*必须</font>
-
-- 应用命名空间，在同个 Nats 集群中命名必须唯一
 
 ### NATS_HOSTS <font color="red">*必须</font>
 
@@ -116,15 +110,12 @@ if js, err = nc.JetStream(nats.PublishAsyncMaxPending(256)); err != nil {
 }
 
 // Create the transfer client
-if x, err = client.New(
-    client.SetNamespace("example"),
-    client.SetJetStream(js),
-); err != nil {
+if x, err = client.New(js); err != nil {
     panic(err)
 }
 ```
 
-## 设置日志流
+## 设置数据流
 
 ```golang
 err := x.Set(context.TODO(), client.StreamOption{
@@ -133,7 +124,7 @@ err := x.Set(context.TODO(), client.StreamOption{
 })
 ```
 
-## 更新日志流
+## 更新数据流
 
 ```golang
 err := x.Update(context.TODO(), client.StreamOption{
@@ -142,13 +133,13 @@ err := x.Update(context.TODO(), client.StreamOption{
 })
 ```
 
-## 获取日志流详情
+## 获取数据流详情
 
 ```golang
 result, err := client.Get("system")
 ```
 
-## 发布日志
+## 发布数据
 
 ```golang
 err := x.Publish(context.TODO(), "system", client.Payload{
@@ -169,7 +160,7 @@ err := x.Publish(context.TODO(), "system", client.Payload{
 })
 ```
 
-## 移除日志流
+## 移除数据流
 
 ```golang
 err := x.Remove("system")

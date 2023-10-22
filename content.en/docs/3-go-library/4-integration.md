@@ -57,7 +57,6 @@ Also define configuration loading
 ```golang
 func UseValues(v *common.Values, kv nats.KeyValue, cipher *cipher.Cipher) *values.Service {
 	return values.New(
-		values.SetNamespace(v.Namespace),
 		values.SetKeyValue(kv),
 		values.SetCipher(cipher),
 		values.SetType(reflect.TypeOf(common.Extra{})),
@@ -119,7 +118,6 @@ First define configuration loading in bootstrap.go
 ```golang
 func UseSessions(v *common.Values, rdb *redis.Client) *sessions.Service {
 	return sessions.New(
-		sessions.SetNamespace(v.Namespace),
 		sessions.SetRedis(rdb),
 		sessions.SetDynamicValues(v.DynamicValues),
 	)
@@ -188,7 +186,6 @@ func UseRest(
 	xcipher *cipher.Cipher,
 ) *rest.Service {
 	return rest.New(
-		rest.SetNamespace(v.Namespace),
 		rest.SetMongoClient(mgo),
 		rest.SetDatabase(db),
 		rest.SetRedis(rdb),

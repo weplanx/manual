@@ -45,7 +45,7 @@ In addition, when dynamic configuration is published, each node with the same na
 
 ### NAMESPACE <font color="red">*required</font>
 
-- Namespace, the name must be unique within the same Nats cluster
+- Namespace, it's unique within the same Nats tenant, DevOps defaults to `weplanx` tenant
 
 ### KEY <font color="red">*required</font>
 
@@ -71,25 +71,29 @@ In addition, when dynamic configuration is published, each node with the same na
 
 - Nats NKEY authentication
 
-### INFLUX_URL <font color="grey">*deprecated</font>
+### INFLUX_URL <font color="red">*required</font>
 
 - InfluxDB connection address
 
-### INFLUX_ORG <font color="grey">*deprecated</font>
+### INFLUX_ORG <font color="red">*required</font>
 
 - Organization naming for InfluxDB
 
-### INFLUX_TOKEN <font color="grey">*deprecated</font>
+### INFLUX_TOKEN <font color="red">*required</font>
 
 - Authorized Token for InfluxDB
 
-### INFLUX_BUCKET <font color="grey">*deprecated</font>
+### INFLUX_BUCKET <font color="red">*required</font>
 
 - InfluxDB bucket
 
-### OTLP_ENDPOINT
+### OTLP_ENDPOINT <font color="red">*required</font>
 
 - OpenTelemetry ENDPOINT
+
+### OTLP_TOKEN <font color="red">*required</font>
+
+- OpenTelemetry TOKEN
 
 ## Dynamic
 
@@ -283,13 +287,25 @@ Weplanx/server also extends other configurations, which are not required if othe
 
 - `string` Secret of Tencent Cloud SMS
 
+### SmsSign
+
+- `string` Sign of Tencent Cloud SMS
+
 ### SmsAppId
 
 - `string` App ID of Tencent Cloud SMS
 
 ### SmsRegion
 
-- `string` SMS Region
+- `string` Region of Tencent Cloud SMS
+
+### SmsPhoneBind
+
+- `string` Template ID for mobile binding of Tencent Cloud SMS
+
+### SmsLoginVerify
+
+- `string` Template ID for login of Tencent Cloud SMS
 
 ### EmqxHost
 
@@ -303,5 +319,11 @@ Weplanx/server also extends other configurations, which are not required if othe
 
 - `string` Secret Key of EMQX API
 
+### AccelerateAddress
 
+- `string` Address of accelerate function of Tencent Cloud SCF
+- International network not required
 
+### CamUin
+
+- `string` Tencent cloud main account ID

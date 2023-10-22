@@ -16,11 +16,11 @@ title: 工作触发
 ## 先决条件
 
 - Nats 集群需启用 JetStream
-- 服务与应用要在同个命名空间下一起工作
+- 服务与应用要在同个 NATS 租户下一起工作
 
 ## 部署
 
-工作节点同时订阅来自定时调度服务、消息队列或第三方事件的工作队列（非持久化），获得消息者触发事件并将结果转入日志流，节点可无限水平扩展分流压力
+工作节点同时订阅来自定时调度服务、消息队列或第三方事件的工作队列（非持久化），获得消息者触发事件并将结果转入数据流，节点可无限水平扩展分流压力
 
 ![](/images/extend/worker.png)
 
@@ -52,8 +52,6 @@ spec:
           env:
             - name: MODE
               value: release
-            - name: NAMESPACE
-              value: <*** your namespace ***>
             - name: NATS_HOSTS
               value: <*** your nats hosts ***>
             - name: NATS_NKEY
@@ -65,10 +63,6 @@ spec:
 ### MODE
 
 - 工作模式，默认 `debug`
-
-### NAMESPACE <font color="red">*必须</font>
-
-- 应用命名空间，在同个 Nats 集群中命名必须唯一
 
 ### NATS_HOSTS <font color="red">*必须</font>
 

@@ -11,6 +11,8 @@ First, to launch the relevant extension services, the namespace must be consiste
 When mirroring is actually used, the version needs to be explicitly specified, such as `v1.0.0`
 {{</hint>}}
 
+If you have higher security needs, you can change the following environment variables and ConfigMap to Secret and then mount them
+
 ## Create Collector
 
 Set up the database and NATS cluster you need to connect to, or add multiple replicas to it. [More](/docs/4-extend/1-collector/)
@@ -36,10 +38,8 @@ spec:
           env:
             - name: MODE
               value: release
-            - name: NAMESPACE
-              value: example
             - name: NATS_HOSTS
-              value: nats://nats.nats.svc.cluster.local:4222
+              value: nats://nats.nats.svc:4222
             - name: NATS_NKEY
               value: <*** your nats nkey***>
             - name: DATABASE_URL
@@ -75,10 +75,8 @@ spec:
               value: release
             - name: NODE
               value: "0"
-            - name: NAMESPACE
-              value: example
             - name: NATS_HOSTS
-              value: nats://nats.nats.svc.cluster.local:4222
+              value: nats://nats.nats.svc:4222
             - name: NATS_NKEY
               value: <*** your nats nkey***>
 ```
@@ -108,17 +106,15 @@ spec:
           env:
             - name: MODE
               value: release
-            - name: NAMESPACE
-              value: example
             - name: NATS_HOSTS
-              value: nats://nats.nats.svc.cluster.local:4222
+              value: nats://nats.nats.svc:4222
             - name: NATS_NKEY
               value: <*** your nats nkey***>
 ```
 
 ## Create ConfigMap
 
-Create a `ConfigMap`, define *default.values.yml*. 
+Define *default.values.yml*. 
 
 The configuration name is the **Snake Case** of dynamic configuration, for example:
 
@@ -137,11 +133,16 @@ data:
     ipv6_secret_key: ...
     sms_secret_id: ...
     sms_secret_key: ...
+    sms_sign: ...
     sms_app_id: ...
     sms_region: ap-guangzhou
-    emqx_host: http://broker-dashboard.emqx.svc.cluster.local:18083/api/v5
+    sms_phone_bind: ...
+    sms_login_verify: ...
+    emqx_host: http://broker-dashboard.emqx.svc:18083/api/v5
     emqx_api_key: ...
     emqx_secret_key: ...
+    accelerate_address: ...
+    cam_uin: ...
     dynamic_values:
       session_ttl: 1h
       login_ttl: 15m
@@ -195,15 +196,44 @@ data:
         imessages:
           status: true
           event: true
+        acc_tasks:
+          status: true
         logset_operates:
           status: true
         logset_logins:
           status: true
         logset_jobs:
           status: true
-        x_orders: # For experiment
+        logset_imessage:
           status: true
       rest_txn_timeout: 3m
+```
+
+Define environment variables
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: env
+data:
+  MODE: "release"
+  CONSOLE: "https://console.xxx.com"
+  XDOMAIN: ".xxx.com"
+  IP: "X-Client-Ip"
+  NAMESPACE: "example"
+  KEY: "<*** your key ***>"
+  DATABASE_URL: "mongodb+srv://example:123456@exp.xxxx.mongodb.net/?readPreference=secondaryPreferred&tls=true&authSource=example"
+  DATABASE_NAME: "example"
+  DATABASE_REDIS: "redis://...@redis.database.svc:6379"
+  INFLUX_URL: "https://..."
+  INFLUX_ORG: "example"
+  INFLUX_TOKEN: "<*** your influx token ***>"
+  INFLUX_BUCKET: "***-devops"
+  NATS_HOSTS: "nats://nats.nats.svc:4222"
+  NATS_NKEY: "<*** your nats nkey ***>"
+  OTLP_ENDPOINT: "xxx-apm-http.elastic-system.svc:8200"
+  OTLP_TOKEN: "<*** your apm token ***>"
 ```
 
 ## Create Initializer
@@ -231,39 +261,9 @@ spec:
         - name: server
           image: registry.cn-shenzhen.aliyuncs.com/weplanx/server:latest
           imagePullPolicy: Always
-          env:
-            - name: MODE
-              value: release
-            - name: CONSOLE
-              value: https://console.xxx.com
-            - name: XDOMAIN
-              value: .xxx.com
-            - name: IP
-              value: X-Client-Ip
-            - name: NAMESPACE
-              value: example
-            - name: KEY
-              value: <*** your key ***>
-            - name: DATABASE_URL
-              value: mongodb+srv://example:123456@exp.xxxx.mongodb.net/?readPreference=secondaryPreferred&tls=true&authSource=example
-            - name: DATABASE_NAME
-              value: example
-            - name: DATABASE_REDIS
-              value: redis://...@redis.database.svc.cluster.local:6379
-            - name: INFLUX_URL
-              value: https://...
-            - name: INFLUX_ORG
-              value: example
-            - name: INFLUX_TOKEN
-              value: <*** your influx token ***>
-            - name: INFLUX_BUCKET
-              value: observability
-            - name: NATS_HOSTS
-              value: nats://nats.nats.svc.cluster.local:4222
-            - name: NATS_NKEY
-              value: <*** your nats nkey ***>
-            - name: OTLP_ENDPOINT
-              value: telegraf.default.svc.cluster.local:4317
+          envFrom:
+            - configMapRef:
+                name: env
           command: [ './server', 'setup' ]
           volumeMounts:
             - name: config
@@ -299,39 +299,9 @@ spec:
         - name: server
           image: registry.cn-shenzhen.aliyuncs.com/weplanx/server:latest
           imagePullPolicy: Always
-          env:
-            - name: MODE
-              value: release
-            - name: CONSOLE
-              value: https://console.xxx.com
-            - name: XDOMAIN
-              value: .xxx.com
-            - name: IP
-              value: X-Client-Ip
-            - name: NAMESPACE
-              value: example
-            - name: KEY
-              value: <*** your key ***>
-            - name: DATABASE_URL
-              value: mongodb+srv://example:123456@exp.xxxx.mongodb.net/?readPreference=secondaryPreferred&tls=true&authSource=example
-            - name: DATABASE_NAME
-              value: example
-            - name: DATABASE_REDIS
-              value: redis://...@redis.database.svc.cluster.local:6379
-            - name: INFLUX_URL
-              value: https://...
-            - name: INFLUX_ORG
-              value: example
-            - name: INFLUX_TOKEN
-              value: <*** your influx token ***>
-            - name: INFLUX_BUCKET
-              value: observability
-            - name: NATS_HOSTS
-              value: nats://nats.nats.svc.cluster.local:4222
-            - name: NATS_NKEY
-              value: <*** your nats nkey ***>
-            - name: OTLP_ENDPOINT
-              value: telegraf.default.svc.cluster.local:4317
+          envFrom:
+            - configMapRef:
+                name: env
           command: [ 'sh' ]
           args:
             - "-c"
@@ -369,45 +339,41 @@ spec:
         app: server
     spec:
       containers:
-        - name: server
+        - name: api
           image: registry.cn-shenzhen.aliyuncs.com/weplanx/server:latest
           imagePullPolicy: Always
-          env:
-            - name: MODE
-              value: release
-            - name: CONSOLE
-              value: https://console.xxx.com
-            - name: XDOMAIN
-              value: .xxx.com
-            - name: IP
-              value: X-Client-Ip
-            - name: NAMESPACE
-              value: example
-            - name: KEY
-              value: <*** your key ***>
-            - name: DATABASE_URL
-              value: mongodb+srv://example:123456@exp.xxxx.mongodb.net/?readPreference=secondaryPreferred&tls=true&authSource=example
-            - name: DATABASE_NAME
-              value: example
-            - name: DATABASE_REDIS
-              value: redis://...@redis.database.svc.cluster.local:6379
-            - name: INFLUX_URL
-              value: https://...
-            - name: INFLUX_ORG
-              value: example
-            - name: INFLUX_TOKEN
-              value: <*** your influx token ***>
-            - name: INFLUX_BUCKET
-              value: observability
-            - name: NATS_HOSTS
-              value: nats://nats.nats.svc.cluster.local:4222
-            - name: NATS_NKEY
-              value: <*** your nats nkey ***>
-            - name: OTLP_ENDPOINT
-              value: telegraf.default.svc.cluster.local:4317
+          envFrom:
+            - configMapRef:
+                name: env
           command: [ "./server", "api" ]
           ports:
             - containerPort: 3000
+          volumeMounts:
+            - name: config
+              mountPath: /app/config
+              readOnly: true
+        - name: xapi
+          image: registry.cn-shenzhen.aliyuncs.com/weplanx/server:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: env
+          command: [ "./server", "xapi" ]
+          ports:
+            - containerPort: 6000
+          volumeMounts:
+            - name: config
+              mountPath: /app/config
+              readOnly: true
+        - name: openapi
+          image: registry.cn-shenzhen.aliyuncs.com/weplanx/server:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: env
+          command: [ "./server", "openapi" ]
+          ports:
+            - containerPort: 9000
           volumeMounts:
             - name: config
               mountPath: /app/config
@@ -429,13 +395,20 @@ metadata:
   name: server
 spec:
   ports:
-    - port: 3000
+    - name: api
+      port: 3000
+      protocol: TCP
+    - name: xapi
+      port: 6000
+      protocol: TCP
+    - name: openapi
+      port: 9000
       protocol: TCP
   selector:
     app: server
 ```
 
-## Set Middleware
+## Apply Ingress
 
 Setting up Traefik security headers and cross-domain middleware for application Ingress
 
@@ -477,9 +450,7 @@ spec:
     addVaryHeader: true
 ```
 
-## Apply Ingress
-
-Apply Ingress, integration middleware and services, and finally resolve the domain name api.xxx.com to the cluster
+Apply Ingress, integration middleware and services
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -501,7 +472,81 @@ spec:
                 name: server
                 port:
                   number: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: openapi
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    traefik.ingress.kubernetes.io/router.middlewares: default-security@kubernetescrd
+spec:
+  rules:
+    - host: openapi.xxx.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: server
+                port:
+                  number: 9000
 ```
+
+If XAPI must go through extranet, you can use ipWhiteList and basicAuth middleware, for example
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: auth
+data:
+  users: |2
+    xxxxxx
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: auth
+spec:
+  basicAuth:
+    secret: auth
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: xapi
+spec:
+  ipWhiteList:
+    sourceRange:
+      - xx.xx.xx.xx/32
+```
+
+Set Ingress again
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: xapi
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: default-security@kubernetescrd,default-auth@kubernetescrd,default-xapi@kubernetescrd
+spec:
+  rules:
+    - host: internal.xxx.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: server
+                port:
+                  number: 6000
+```
+
 
 ## Front-end static pages
 

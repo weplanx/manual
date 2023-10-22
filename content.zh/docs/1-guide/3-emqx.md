@@ -39,67 +39,61 @@ spec:
 
 ## 创建 XAPI
 
-在应用上线完毕后，创建 XAPI 服务用于内部系统，对应端口推荐 `:6000`
+在应用上线完毕后，创建 XAPI 服务用于内部系统，详情查看[应用部署](/zh/docs/1-guide/2-deployment/#创建应用)
 
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: xapi
+  name: server
   labels:
-    app: xapi
+    app: server
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: xapi
+      app: server
   template:
     metadata:
       labels:
-        app: xapi
+        app: server
     spec:
       containers:
-        - name: server
+        - name: api
           image: registry.cn-shenzhen.aliyuncs.com/weplanx/server:latest
           imagePullPolicy: Always
-          env:
-            - name: MODE
-              value: release
-            - name: ADDRESS
-              value: :6000
-            - name: CONSOLE
-              value: https://console.xxx.com
-            - name: XDOMAIN
-              value: .xxx.com
-            - name: IP
-              value: X-Client-Ip
-            - name: NAMESPACE
-              value: example
-            - name: KEY
-              value: <*** your key ***>
-            - name: DATABASE_URL
-              value: mongodb+srv://example:123456@exp.xxxx.mongodb.net/?readPreference=secondaryPreferred&tls=true&authSource=example
-            - name: DATABASE_NAME
-              value: example
-            - name: DATABASE_REDIS
-              value: redis://...@redis.database.svc.cluster.local:6379
-            - name: INFLUX_URL
-              value: https://...
-            - name: INFLUX_ORG
-              value: example
-            - name: INFLUX_TOKEN
-              value: <*** your influx token ***>
-            - name: INFLUX_BUCKET
-              value: observability
-            - name: NATS_HOSTS
-              value: nats://nats.nats.svc.cluster.local:4222
-            - name: NATS_NKEY
-              value: <*** your nats nkey ***>
-            - name: OTLP_ENDPOINT
-              value: telegraf.default.svc.cluster.local:4317
+          envFrom:
+            - configMapRef:
+                name: env
+          command: [ "./server", "api" ]
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: config
+              mountPath: /app/config
+              readOnly: true
+        - name: xapi
+          image: registry.cn-shenzhen.aliyuncs.com/weplanx/server:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: env
           command: [ "./server", "xapi" ]
           ports:
             - containerPort: 6000
+          volumeMounts:
+            - name: config
+              mountPath: /app/config
+              readOnly: true
+        - name: openapi
+          image: registry.cn-shenzhen.aliyuncs.com/weplanx/server:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: env
+          command: [ "./server", "openapi" ]
+          ports:
+            - containerPort: 9000
           volumeMounts:
             - name: config
               mountPath: /app/config
@@ -110,19 +104,26 @@ spec:
             name: server
 ```
 
-## 创建内部服务
+创建内部服务
 
 ```yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: xapi
+  name: server
 spec:
   ports:
-    - port: 6000
+    - name: api
+      port: 3000
+      protocol: TCP
+    - name: xapi
+      port: 6000
+      protocol: TCP
+    - name: openapi
+      port: 9000
       protocol: TCP
   selector:
-    app: xapi
+    app: server
 ```
 
 ## 设置 HTTP 认证与授权
@@ -134,7 +135,7 @@ XAPI 集成 EMQX 接口可[查看](/docs/6-xapi/1-emqx/)，接下来需要访问
 - 认证方式：Password-Based
 - 数据源：HTTP 服务
 - 请求方式：POST
-- URL：http://xapi.emqx.svc.cluster.local:6000/emqx/auth
+- URL：http://server.default.svc:6000/emqx/auth
 - 请求体：
 
 ```json
@@ -148,7 +149,7 @@ XAPI 集成 EMQX 接口可[查看](/docs/6-xapi/1-emqx/)，接下来需要访问
 
 - 数据源：HTTP 服务
 - 请求方式：POST
-- URL：http://xapi.emqx.svc.cluster.local:6000/emqx/acl
+- URL：http://server.default.svc:6000/emqx/acl
 - 请求体：
 
 ```json
@@ -163,6 +164,9 @@ XAPI 集成 EMQX 接口可[查看](/docs/6-xapi/1-emqx/)，接下来需要访问
 XAPI 的数据桥接是针对开源版 Broker 消息发送做日志收集，如果是企业版自身是支持更多功能的，无需采用该方式。
 
 - 数据桥接类型：HTTP 服务
+- 名称：logset，必须
+- 请求方式：POST
+- URL：http://server.default.svc:6000/emqx/bridge
 - 请求体：
 
 ```json

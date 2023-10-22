@@ -43,67 +43,61 @@ spec:
 
 ## Create XAPI
 
-After the application is launched, create an XAPI for use in the internal, port recommendation `:6000`
+After the application is launched, create an XAPI for use in the internal, View [details](/docs/1-guide/2-deployment/#create-app)
 
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: xapi
+  name: server
   labels:
-    app: xapi
+    app: server
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: xapi
+      app: server
   template:
     metadata:
       labels:
-        app: xapi
+        app: server
     spec:
       containers:
-        - name: server
+        - name: api
           image: registry.cn-shenzhen.aliyuncs.com/weplanx/server:latest
           imagePullPolicy: Always
-          env:
-            - name: MODE
-              value: release
-            - name: ADDRESS
-              value: :6000
-            - name: CONSOLE
-              value: https://console.xxx.com
-            - name: XDOMAIN
-              value: .xxx.com
-            - name: IP
-              value: X-Client-Ip
-            - name: NAMESPACE
-              value: example
-            - name: KEY
-              value: <*** your key ***>
-            - name: DATABASE_URL
-              value: mongodb+srv://example:123456@exp.xxxx.mongodb.net/?readPreference=secondaryPreferred&tls=true&authSource=example
-            - name: DATABASE_NAME
-              value: example
-            - name: DATABASE_REDIS
-              value: redis://...@redis.database.svc.cluster.local:6379
-            - name: INFLUX_URL
-              value: https://...
-            - name: INFLUX_ORG
-              value: example
-            - name: INFLUX_TOKEN
-              value: <*** your influx token ***>
-            - name: INFLUX_BUCKET
-              value: observability
-            - name: NATS_HOSTS
-              value: nats://nats.nats.svc.cluster.local:4222
-            - name: NATS_NKEY
-              value: <*** your nats nkey ***>
-            - name: OTLP_ENDPOINT
-              value: telegraf.default.svc.cluster.local:4317
+          envFrom:
+            - configMapRef:
+                name: env
+          command: [ "./server", "api" ]
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: config
+              mountPath: /app/config
+              readOnly: true
+        - name: xapi
+          image: registry.cn-shenzhen.aliyuncs.com/weplanx/server:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: env
           command: [ "./server", "xapi" ]
           ports:
             - containerPort: 6000
+          volumeMounts:
+            - name: config
+              mountPath: /app/config
+              readOnly: true
+        - name: openapi
+          image: registry.cn-shenzhen.aliyuncs.com/weplanx/server:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: env
+          command: [ "./server", "openapi" ]
+          ports:
+            - containerPort: 9000
           volumeMounts:
             - name: config
               mountPath: /app/config
@@ -114,19 +108,26 @@ spec:
             name: server
 ```
 
-## Apply Service
+Apply Service
 
 ```yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: xapi
+  name: server
 spec:
   ports:
-    - port: 6000
+    - name: api
+      port: 3000
+      protocol: TCP
+    - name: xapi
+      port: 6000
+      protocol: TCP
+    - name: openapi
+      port: 9000
       protocol: TCP
   selector:
-    app: xapi
+    app: server
 ```
 
 ## Set HTTP Authentication and Authorization
@@ -138,7 +139,7 @@ The XAPI integrated EMQX API has [these](/en/docs/6-xapi/1-emqx/), next you need
 - Mechanism: Password-Based
 - Backend: HTTP Server
 - Method: POST
-- URL：http://xapi.emqx.svc.cluster.local:6000/emqx/auth
+- URL: http://server.default.svc:6000/emqx/auth
 - Body:
 
 ```json
@@ -152,7 +153,7 @@ The XAPI integrated EMQX API has [these](/en/docs/6-xapi/1-emqx/), next you need
 
 - Backend: HTTP Server
 - Method: POST
-- URL：http://xapi.emqx.svc.cluster.local:6000/emqx/acl
+- URL: http://server.default.svc:6000/emqx/acl
 - Body:
 
 ```json
@@ -169,6 +170,9 @@ The data bridge of XAPI is to collect logs for the open source version of Broker
 If the enterprise version itself supports more functions, there is no need to use this method.
 
 - Type of Data Bridge: HTTP Server
+- Name(must): logset
+- Method: POST
+- URL: http://server.default.svc:6000/emqx/bridge
 - Body:
 
 ```json

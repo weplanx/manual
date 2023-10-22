@@ -16,12 +16,12 @@ Distribution message event callback worker node
 ## Pre-requisite
 
 - Nats cluster needs to enable JetStream
-- Services and applications should work together the same namespace
+- Services and applications should work together the same nats tenant
 
 ## Deploy
 
 The worker node subscribes to the work queue (non-persistent), including events from Schdule, MQ (message queue) and third-party.
-The node that gets the message triggers the event and transfers the result to the logset.
+The node that gets the message triggers the event and transfers the result to the data stream.
 Node support horizontal expansion shunt pressure.
 
 ![](/images/extend/worker.png)
@@ -54,8 +54,6 @@ spec:
           env:
             - name: MODE
               value: release
-            - name: NAMESPACE
-              value: <*** your namespace ***>
             - name: NATS_HOSTS
               value: <*** your nats hosts ***>
             - name: NATS_NKEY
@@ -67,10 +65,6 @@ spec:
 ### MODE
 
 - Working mode, default `debug`
-
-### NAMESPACE <font color="red">*required</font>
-
-- namespace, the name must be unique within the same Nats cluster
 
 ### NATS_HOSTS <font color="red">*required</font>
 
