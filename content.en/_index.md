@@ -98,9 +98,9 @@ Case Overview
 
 {{< /tabs >}}
 
-{{< details title="Observability(deprecated)" open=true >}}
+{{< details title="Observability(rename to Monitor)" open=true >}}
 {{< hint warning >}}
-Plan to use Elastic APM to replace InfluxDB OSS v2 custom
+APM and RUNTIME have used Elastic APM solution management
 {{< /hint >}}
 ![observability-1.png](/images/observability-1.png)
 ![observability-2.png](/images/observability-2.png)

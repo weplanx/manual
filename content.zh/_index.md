@@ -90,9 +90,9 @@ Weplanx 架构定位在中轻量级应用，但需要运行在 Kubernetes 上，
 
 {{< /tabs >}}
 
-{{< details title="应用观测（已弃用）" open=true >}}
+{{< details title="应用观测（重命名为监控）" open=true >}}
 {{< hint warning >}}
-计划使用 Elastic APM 替代 InfluxDB OSS v2 定制接口
+APM 与 RUNTIME 已使用 Elastic APM 方案管理
 {{< /hint >}}
 ![observability-1.png](/images/observability-1.png)
 ![observability-2.png](/images/observability-2.png)
