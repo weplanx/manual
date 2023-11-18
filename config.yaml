@@ -1,5 +1,5 @@
 baseURL: https://wpx.kainonly.com
-title: WEPLANX 手册
+title: WEPLANX MANUAL
 defaultContentLanguage: en
 theme: hugo-book
 
@@ -14,18 +14,6 @@ markup:
     startLevel: 1
   highlight:
     style: vs
-
-languages:
-  zh:
-    languageName: Chinese
-    contentDir: content.zh
-    weight: 1
-  en:
-    languageName: English
-    title: WEPLANX MANUAL
-    contentDir: content.en
-    weight: 2
-
 
 menu:
   after:
