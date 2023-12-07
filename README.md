@@ -2,7 +2,6 @@
 description: >-
   Weplanx is an open source project that explores the combination of DevOps and
   LowCode.
-layout: landing
 ---
 
 # 👋 Hi, there.
@@ -71,5 +70,245 @@ Weplanx architecture for medium-light applications, but needs to run on Kubernet
 
 {% tab title="Center-4" %}
 <figure><img src=".gitbook/assets/center-4.png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+{% endtabs %}
+
+{% tabs %}
+{% tab title="Project-1" %}
+<figure><img src=".gitbook/assets/project-1.png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Project-2" %}
+<figure><img src=".gitbook/assets/project-2.png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Project-3" %}
+<figure><img src=".gitbook/assets/project-3 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Project-4" %}
+<figure><img src=".gitbook/assets/project-4.png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+{% endtabs %}
+
+{% tabs %}
+{% tab title="Cluster-1" %}
+<figure><img src=".gitbook/assets/cluster-1.png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Cluster-2" %}
+<figure><img src=".gitbook/assets/cluster-2.png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Cluster-3" %}
+<figure><img src=".gitbook/assets/cluster-3.png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+{% endtabs %}
+
+{% tabs %}
+{% tab title="Endpoint-1" %}
+<figure><img src=".gitbook/assets/endpoint-1 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Endpoint-2" %}
+<figure><img src=".gitbook/assets/endpoint-2 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Endpoint-3" %}
+<figure><img src=".gitbook/assets/endpoint-3 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+{% endtabs %}
+
+{% tabs %}
+{% tab title="Builder-1" %}
+<figure><img src=".gitbook/assets/builder-1 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Builder-2" %}
+<figure><img src=".gitbook/assets/builder-2 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Builder-3" %}
+<figure><img src=".gitbook/assets/builder-3 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Builder-4" %}
+<figure><img src=".gitbook/assets/builder-4 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Builder-5" %}
+<figure><img src=".gitbook/assets/builder-5 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Builder-6" %}
+<figure><img src=".gitbook/assets/builder-6 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+{% endtabs %}
+
+{% tabs %}
+{% tab title="Workflow-1" %}
+<figure><img src=".gitbook/assets/workflow-1 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Workflow-2" %}
+<figure><img src=".gitbook/assets/workflow-2 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Workflow-3" %}
+<figure><img src=".gitbook/assets/workflow-3 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Workflow-4" %}
+<figure><img src=".gitbook/assets/workflow-4 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Workflow-5" %}
+<figure><img src=".gitbook/assets/workflow-5 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Workflow-6" %}
+<figure><img src=".gitbook/assets/workflow-6 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+{% endtabs %}
+
+{% tabs %}
+{% tab title="Queue-1" %}
+<figure><img src=".gitbook/assets/queue-1 (1).png" alt=""><figcaption></figcaption></figure>
+
+
+{% endtab %}
+
+{% tab title="Queue-2" %}
+<figure><img src=".gitbook/assets/queue-2 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Queue-3" %}
+<figure><img src=".gitbook/assets/queue-3 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Queue-4" %}
+<figure><img src=".gitbook/assets/queue-4 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+{% endtabs %}
+
+{% tabs %}
+{% tab title="IMessage-1" %}
+<figure><img src=".gitbook/assets/imessage-1 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="IMessage-2" %}
+<figure><img src=".gitbook/assets/imessage-2 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="IMessage-3" %}
+<figure><img src=".gitbook/assets/imessage-3.png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="IMessage-4" %}
+<figure><img src=".gitbook/assets/imessage-4 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="IMessage-5" %}
+<figure><img src=".gitbook/assets/imessage-5 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="IMessage-6" %}
+<figure><img src=".gitbook/assets/imessage-6 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+{% endtabs %}
+
+{% tabs %}
+{% tab title="Dataset-1" %}
+<figure><img src=".gitbook/assets/dataset-1 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Dataset-2" %}
+<figure><img src=".gitbook/assets/dataset-2 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Dataset-3" %}
+<figure><img src=".gitbook/assets/dataset-3.png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Dataset-4" %}
+<figure><img src=".gitbook/assets/dataset-4 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+{% endtabs %}
+
+{% tabs %}
+{% tab title="Monitor-1" %}
+{% hint style="warning" %}
+APM and RUNTIME have used Elastic APM solution
+{% endhint %}
+
+<figure><img src=".gitbook/assets/monitor-1 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Monitor-2" %}
+<figure><img src=".gitbook/assets/monitor-2 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Monitor-3" %}
+<figure><img src=".gitbook/assets/monitor-3 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+{% endtabs %}
+
+{% tabs %}
+{% tab title="Integrated-1" %}
+<figure><img src=".gitbook/assets/integrated-1 (1).png" alt=""><figcaption></figcaption></figure>
+
+
+{% endtab %}
+
+{% tab title="Integrated-2" %}
+<figure><img src=".gitbook/assets/integrated-2 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Integrated-3" %}
+<figure><img src=".gitbook/assets/integrated-3 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Integrated-4" %}
+<figure><img src=".gitbook/assets/integrated-4 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+{% endtabs %}
+
+{% tabs %}
+{% tab title="Setting-1" %}
+<figure><img src=".gitbook/assets/setting-1 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Setting-2" %}
+<figure><img src=".gitbook/assets/setting-2 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Setting-3" %}
+<figure><img src=".gitbook/assets/setting-3 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Setting-4" %}
+<figure><img src=".gitbook/assets/setting-4 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Audit" %}
+<figure><img src=".gitbook/assets/audit (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+{% endtabs %}
+
+{% tabs %}
+{% tab title="Picture-1" %}
+<figure><img src=".gitbook/assets/picture-1 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Picture-2" %}
+<figure><img src=".gitbook/assets/picture-2 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Picture-3" %}
+<figure><img src=".gitbook/assets/picture-3 (1).png" alt=""><figcaption></figcaption></figure>
+{% endtab %}
+
+{% tab title="Video" %}
+<figure><img src=".gitbook/assets/video (1).gif" alt=""><figcaption></figcaption></figure>
 {% endtab %}
 {% endtabs %}
