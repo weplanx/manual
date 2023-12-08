@@ -15,3 +15,10 @@
 * [Core](angular-library/core.md)
 * [Basic](angular-library/basic.md)
 * [Integration](angular-library/integration.md)
+
+## Golang Library
+
+* [Basic](golang-library/basic.md)
+* [Helper](golang-library/helper.md)
+* [Middlewares](golang-library/middlewares.md)
+* [Integration](golang-library/integration.md)
