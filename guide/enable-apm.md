@@ -1,9 +1,15 @@
 ---
-description: >-
-  Weplanx adopts [Elastic Cloud on
-  Kubernetes](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-overview.html)
-  for full-text index and APM Observability, Whether using self-host or public
-  cloud,
+layout:
+  title:
+    visible: true
+  description:
+    visible: false
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
 ---
 
 # Enable APM
