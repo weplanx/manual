@@ -22,3 +22,10 @@
 * [Helper](golang-library/helper.md)
 * [Middlewares](golang-library/middlewares.md)
 * [Integration](golang-library/integration.md)
+
+## Extend
+
+* [Collector](extend/collector.md)
+* [Schedule](extend/schedule.md)
+* [Worker](extend/worker.md)
+* [Serverless](extend/serverless.md)
