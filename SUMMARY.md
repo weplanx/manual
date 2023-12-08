@@ -29,3 +29,12 @@
 * [Schedule](extend/schedule.md)
 * [Worker](extend/worker.md)
 * [Serverless](extend/serverless.md)
+
+## Core Api
+
+* [Common](core-api/common.md)
+* [Dynamic Configuration](core-api/dynamic-configuration.md)
+* [Sessions](core-api/sessions.md)
+* [Mongo Rest](core-api/mongo-rest.md)
+* [Public Cloud](core-api/public-cloud.md)
+* [Collaboration](core-api/collaboration.md)
