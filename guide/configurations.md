@@ -1,10 +1,20 @@
 ---
-description: >-
-  Application service configuration items consist of environement variables and
-  distribution dynamic configuration.
+layout:
+  title:
+    visible: true
+  description:
+    visible: false
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
 ---
 
 # Configurations
+
+Application service configuration items consist of environement variables and distribution dynamic configuration.
 
 Each configuration item is assigned to the variable Values of the backend service.
 
